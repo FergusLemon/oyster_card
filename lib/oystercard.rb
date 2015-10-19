@@ -6,4 +6,8 @@ attr_accessor :balance
     @balance = balance
   end
 
+  def topup(value)
+    @balance += value
+  end
+
 end
