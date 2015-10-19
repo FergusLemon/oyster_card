@@ -1,26 +1,37 @@
 class Oystercard
 
+LIMIT = 90
+DEFAULT_BALANCE = 0
 attr_accessor :balance
 
-  def initialize(balance = 0)
+  def initialize(balance = DEFAULT_BALANCE)
     # fail_topping
-    if balance >= 100
-      balance = 100
+    if balance >= LIMIT
+      balance = LIMIT
       @balance = balance
-      'you have only topped up 100£ because exeeded the limit of 100'
+      "You have only topped up £90 because the limit is £#{LIMIT}."
     else
       @balance = balance
     end
   end
 
   def topup(value)
-    if value + @balance > 100
-      topping_up = 100 - @balance
+    if value + @balance > LIMIT
+      topping_up = LIMIT - @balance
       @balance += topping_up
-      puts "You have only topped up #{topping_up} because the limit is 100£"
+      puts "You have only topped up #{topping_up} because the limit is £#{LIMIT}."
       @balance
     else
       @balance += value
+    end
+
+  end
+
+  def deduct(value)
+    if value > @balance
+      fail "You cannot afford this ticket, you need to top up"
+    else
+      @balance -= value
     end
   end
 #
