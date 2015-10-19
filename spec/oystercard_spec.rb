@@ -10,12 +10,6 @@ describe Oystercard do
       is_expected.to respond_to(:topup).with(1).argument
     end
 
-    it 'you\'re topping up too much on your new card' do
-      card = subject
-      card.topup 101
-      expect(card.balance).not_to be > Oystercard::LIMIT
-    end
-
     it 'You have tooped up too much' do
       card = Oystercard.new
       card.topup(101)
