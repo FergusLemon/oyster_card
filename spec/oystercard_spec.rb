@@ -2,6 +2,14 @@ require 'oystercard'
 describe Oystercard do
 
   let(:card) { Oystercard.new }
+  let(:station) { double :station }
+
+
+    it 'records the station where you #touch_in' do
+      subject.topup(Oystercard::MINIMUM_BALANCE)
+      subject.touch_in(station)
+      expect(subject.entry_station).to eq station
+    end
 
   context 'card balance' do
     it 'show the card balance' do
@@ -28,24 +36,24 @@ describe Oystercard do
         subject.topup(Oystercard::MINIMUM_BALANCE)
       end
           it "expect touch in to change active status to true" do
-            expect(subject.touch_in).to eq true
+            expect(subject.touch_in(station)).to eq station
           end
 
           it "expect touch out to change active status to false" do
-            subject.touch_in
-            expect(subject.touch_out).to eq false
+            subject.touch_in(station)
+            expect(subject.touch_out).to be(nil)
           end
 
           it "checks whether a card is in journey or not" do
-            subject.touch_in
-            expect(subject.in_journey).to eq true
+            subject.touch_in(station)
+            expect(subject.in_journey?).to eq true
           end
     end
 
     it "requires a minimum balances before touching in" do
       card.topup(Oystercard::MINIMUM_BALANCE)
       card.touch_out(1)
-      expect{subject.touch_in}.to raise_error "Please top up to £ #{Oystercard::MINIMUM_BALANCE} before touching in"
+      expect{subject.touch_in(station)}.to raise_error "Please top up to £ #{Oystercard::MINIMUM_BALANCE} before touching in"
     end
 
     it "deducts travel fare from card balance when touching out" do
@@ -59,5 +67,6 @@ describe Oystercard do
     end
 
   end
+
 
 end
