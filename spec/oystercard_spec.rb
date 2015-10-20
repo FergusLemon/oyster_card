@@ -23,11 +23,20 @@ describe Oystercard do
       expect(card.balance).to eq 40
     end
 
-    # it "Raises an error if you cannot afford the fare" do
-    #   card = Oystercard.new(50)
-    #   card.deduct(60)
-    #   expect {card.balance}.to raise_error "You cannot afford this ticket, you need to top up"
-    # end
+    it "expect activate to change active status to true" do
+      expect(subject.activate).to eq true
+    end
+
+    it "expect deactivate to change active status to false" do
+      subject.activate
+      expect(subject.deactivate).to eq false
+    end
+
+    it "checks whether a card is in journey or not" do
+      subject.activate
+      expect(subject.check_in_journey?).to eq true
+    end
+
   end
 
 end
