@@ -7,7 +7,7 @@ attr_reader :balance, :entry_station
 
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
-    @entry_station = false
+    @entry_station = nil
   end
 
   def topup(value)
