@@ -5,7 +5,7 @@ DEFAULT_BALANCE = 0
 attr_accessor :balance
 
   def initialize(balance = DEFAULT_BALANCE)
-    balance <= LIMIT ? @balance = balance : "You cannot top up more than £#{LIMIT}"
+    @balance = balance 
   end
 
   def topup(value)
