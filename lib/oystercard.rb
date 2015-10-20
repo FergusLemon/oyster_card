@@ -15,21 +15,14 @@ attr_reader :balance, :in_journey
     @balance += value
   end
 
-  def deduct(value)
-    @balance -= value
-  end
-
-  def activate
+  def touch_in
     fail "Please top up to £ #{MINIMUM_BALANCE} before touching in" if empty?
     @in_journey = true
   end
 
-  def deactivate
+  def touch_out(value = MINIMUM_BALANCE)
+    deduct(value)
     @in_journey = false
-  end
-
-  def check_in_journey?
-    @in_journey == true
   end
 
   private
@@ -40,6 +33,10 @@ attr_reader :balance, :in_journey
 
     def empty?
       @balance < MINIMUM_BALANCE
+    end
+
+    def deduct(value)
+      @balance -= value
     end
 
 end
