@@ -1,6 +1,8 @@
 require 'oystercard'
 describe Oystercard do
 
+  let(:card) { Oystercard.new }
+
   context 'card balance' do
     it 'show the card balance' do
       expect(subject.balance).to eq Oystercard::DEFAULT_BALANCE
@@ -11,9 +13,8 @@ describe Oystercard do
     end
 
     it 'You have tooped up too much' do
-      card = Oystercard.new
-      card.topup(101)
-      expect(card.balance).not_to be > Oystercard::LIMIT
+      card.topup(90)
+      expect { card.topup(1) }.to raise_error "You have exceeded the balance limit of £#{Oystercard::LIMIT}"
     end
 
     it "Deducts the travel fare from the card" do
