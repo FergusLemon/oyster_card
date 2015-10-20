@@ -53,6 +53,11 @@ describe Oystercard do
       expect{subject.touch_out}.to change{subject.balance}.by(-Oystercard::MINIMUM_BALANCE)
     end
 
+    it "deducts travel fare from card balance when touching out" do
+      subject.topup(50)
+      expect{subject.touch_out(30)}.to change{subject.balance}.by(-30)
+    end
+
   end
 
 end
