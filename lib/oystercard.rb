@@ -2,6 +2,7 @@ class Oystercard
 
 LIMIT = 90
 DEFAULT_BALANCE = 0
+MINIMUM_BALANCE = 1
 attr_reader :balance, :in_journey
 
   def initialize(balance = DEFAULT_BALANCE)
@@ -19,6 +20,7 @@ attr_reader :balance, :in_journey
   end
 
   def activate
+    fail "Please top up to £ #{MINIMUM_BALANCE} before touching in" if empty?
     @in_journey = true
   end
 
@@ -34,6 +36,10 @@ attr_reader :balance, :in_journey
 
     def card_full?(value)
       @balance + value > LIMIT
+    end
+
+    def empty?
+      @balance < MINIMUM_BALANCE
     end
 
 end
