@@ -1,0 +1,31 @@
+require './lib/journey'
+j = Journey.new
+victoria = Station.new("victoria", 1)
+waterloo = Station.new("waterloo", 2)
+aldgate = Station.new("aldgate", 3)
+battersea = Station.new("battersea", 4)
+
+j.start_journey(battersea)
+j.journey_complete?
+
+j.end_journey(aldgate)
+
+j
+
+j.journey_complete?
+
+j.start_journey(waterloo)
+j.journey_complete?
+j.end_journey(victoria)
+
+j.journey_complete?
+
+j.end_journey(aldgate)
+
+j
+
+j.start_journey(battersea)
+
+j
+
+j.journey_complete?

@@ -1,33 +1,45 @@
+require_relative 'station'
+
 class Journey
 
-attr_reader :entry_station, :exit_station
+MIN_FARE = 1
+PENALTY_FARE = 6
 
-  def initialize
-    @journey_history = []
-    @entry_station = nil
-    @exit_station = nil
-  end
+attr_reader :trip
+
+def initialize
+   @trip = {}
+   @journey_history = []
+ end
 
 
-  def start_journey(entry_station)
-    @entry_station = entry_station
-  end
+ def start_journey(entry_station)
+   @trip[:entry_station] = entry_station.name
+   @trip[:exit_station] = nil
+ end
 
-  def end_journey(exit_station)
-    @exit_station = exit_station
-    add_history
-  end
+ def end_journey(exit_station)
+   @trip[:exit_station] = exit_station.name
+   journey_complete?
+   add_history
+ end
 
-  def journey_complete?
-    entry_station == nil && exit_station == nil ? true : false
-  end
+ def journey_complete?
+   !(@trip[:exit_station] == nil || @trip[:entry_station] == nil)
+ end
 
-  private
+ def fare
+   fare_calculator
+ end
 
-  def add_history
-    @journey_history << {@entry_station => @exit_station}
-    @entry_station = nil
-    @exit_station = nil
-  end
+ private
+
+ def add_history
+   @journey_history << {@trip[:entry_station] => @trip[:exit_station]}
+ end
+
+ def fare_calculator
+   journey_complete? ? MIN_FARE : PENALTY_FARE
+ end
 
 end
