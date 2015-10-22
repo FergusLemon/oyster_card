@@ -1,10 +1,16 @@
 require 'station'
 describe Station do
 
-  let(:subject) { Station.new(name: station_1, zone: zone_0)}
+  let(:station) { described_class.new("victoria",1) }
 
-  it 'has name and zone attributes' do
-    expect(subject).to have_attributes(:name => "station_1", :zone => "zone_0")
+  describe '#initialize' do
+    it 'has a name' do
+      expect(station.name).to eq("victoria")
+    end
+
+    it 'has a zone' do
+      expect(station.zone).to eq(1)
+    end
   end
 
 end
