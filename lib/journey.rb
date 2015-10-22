@@ -1,10 +1,33 @@
 class Journey
 
-  def start_journey(name)
-    @name = name
+attr_reader :entry_station, :exit_station
+
+  def initialize
+    @journey_history = []
+    @entry_station = nil
+    @exit_station = nil
   end
 
-  def end_journey(name)
-    @name = name
+
+  def start_journey(entry_station)
+    @entry_station = entry_station
   end
+
+  def end_journey(exit_station)
+    @exit_station = exit_station
+    add_history
+  end
+
+  def journey_complete?
+    entry_station == nil && exit_station == nil ? true : false
+  end
+
+  private
+
+  def add_history
+    @journey_history << {@entry_station => @exit_station}
+    @entry_station = nil
+    @exit_station = nil
+  end
+
 end

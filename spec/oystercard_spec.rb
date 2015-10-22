@@ -3,18 +3,8 @@ describe Oystercard do
 
   let(:card) { described_class.new(described_class::DEFAULT_BALANCE, Journey)}
   let(:station) { double :station }
-  let(:journey) { double(start_journey: :victoria) }
-
-  it ' expects a new card to have no journey history' do
-    expect(card.journey_history).to eq []
-  end
-
-  it ' expects atouch in and out to create one journey' do
-    card.topup(50)
-    card.touch_in(station)
-    card.touch_out(station)
-    expect(card.journey_history.length).to eq(1)
-  end
+  let(:start_journey) { double(start_journey: :victoria) } #allows journey object to receive the start_journey message and return victoria
+  let(:end_journey) { double(end_journey: :angel) }
 
   context 'card balance' do
     it 'show the card balance' do
@@ -35,10 +25,6 @@ describe Oystercard do
             expect(card.touch_in(station)).to eq station
           end
 
-          xit "checks whether a card is in journey or not" do
-            card.touch_in(station)
-            expect(card.in_journey?).to eq true
-          end
     end
 
     it "requires a minimum balances before touching in" do

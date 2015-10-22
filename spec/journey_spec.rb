@@ -13,11 +13,21 @@ describe Journey do
     end
 
     it 'ends a journey' do
-      expect(journey.end_journey(exit_station.name)).to eq :angel
+      journey.end_journey(exit_station)
+      expect(journey.exit_station).to eq(nil)
     end
+
+    it 'returns when the journey is complete' do
+    journey.start_journey(entry_station)
+    journey.end_journey(exit_station)
+    expect(journey.journey_complete?).to eq(true)
   end
 
-
+  it 'returns when the journey is not complete' do
+    journey.start_journey(entry_station)
+    expect(journey.journey_complete?).to eq(false)
+  end
+end
 
 
 end
