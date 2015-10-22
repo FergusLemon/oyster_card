@@ -2,7 +2,7 @@ require 'oystercard'
 describe Oystercard do
 
   let(:card) { described_class.new(described_class::DEFAULT_BALANCE, Journey)}
-  let(:station) { double :station }
+  let(:station) { double(name: :euston, zone: 2) }
   let(:start_journey) { double(start_journey: :victoria) } #allows journey object to receive the start_journey message and return victoria
   let(:end_journey) { double(end_journey: :angel) }
 
@@ -21,9 +21,6 @@ describe Oystercard do
       before do
         card.topup(Oystercard::MINIMUM_BALANCE)
       end
-          it "expect touch in to change active status to true" do
-            expect(card.touch_in(station)).to eq station
-          end
 
     end
 

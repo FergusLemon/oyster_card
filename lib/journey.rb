@@ -8,24 +8,27 @@ PENALTY_FARE = 6
 attr_reader :trip
 
 def initialize
-   @trip = {}
+   @entry_station = nil
+   @exit_station = nil
    @journey_history = []
  end
 
 
  def start_journey(entry_station)
-   @trip[:entry_station] = entry_station.name
-   @trip[:exit_station] = nil
+   @entry_station = entry_station.name
  end
 
  def end_journey(exit_station)
-   @trip[:exit_station] = exit_station.name
-   journey_complete?
+   @exit_station = exit_station.name
    add_history
  end
 
  def journey_complete?
-   !(@trip[:exit_station] == nil || @trip[:entry_station] == nil)
+   @entry_station == nil && @exit_station == nil
+ end
+
+ def journey_in_progress?
+   @entry_station != nil
  end
 
  def fare
@@ -35,7 +38,9 @@ def initialize
  private
 
  def add_history
-   @journey_history << {@trip[:entry_station] => @trip[:exit_station]}
+   @journey_history << {@entry_station => @exit_station}
+   @entry_station = nil
+   @exit_station = nil
  end
 
  def fare_calculator

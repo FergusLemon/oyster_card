@@ -9,13 +9,13 @@ describe Journey do
   context 'going on a journey' do
 
     it 'starts a journey' do
-      expect(journey.start_journey(entry_station.name)).to eq :euston
+      expect(journey.start_journey(entry_station)).to eq :euston
     end
 
     it 'ends a journey' do
       journey.start_journey(entry_station)
       journey.end_journey(exit_station)
-      expect(journey.end_journey(exit_station)).to eq :angel
+      expect(journey.end_journey(exit_station)).to eq nil
     end
 
     it 'returns when the journey is complete' do
@@ -28,13 +28,6 @@ describe Journey do
       journey.start_journey(entry_station)
       expect(journey.journey_complete?).to eq(false)
     end
-
-    it 'returns an empty value for entry station' do
-      journey.start_journey(entry_station)
-      journey.end_journey(exit_station)
-      journey.end_journey(exit_station)
-      expect(journey.trip[:entry_station]).to be_nil
-  end
 
 end
 

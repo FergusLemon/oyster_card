@@ -26,7 +26,7 @@ attr_reader :balance
   end
 
   def in_journey?
-    @entry_station != nil
+    journey.journey_complete? == false
   end
 
   private
