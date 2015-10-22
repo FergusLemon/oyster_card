@@ -20,10 +20,6 @@ describe Oystercard do
       expect(subject.balance).to eq Oystercard::DEFAULT_BALANCE
     end
 
-    it 'topup card balance' do
-      is_expected.to respond_to(:topup).with(1).argument
-    end
-
     it 'You have tooped up too much' do
       subject.topup(90)
       expect { subject.topup(1) }.to raise_error "You have exceeded the balance limit of £#{Oystercard::LIMIT}"
@@ -38,12 +34,6 @@ describe Oystercard do
             expect(subject.touch_in(station)).to eq station
           end
 
-          # it "expect touch out to change active status to false" do
-          #   allow(subject).to receive(:entry_station).and_return(station)
-          #   subject.touch_out(station)
-          #   expect(subject.entry_station).to be(nil)
-          # end
-
           it "checks whether a card is in journey or not" do
             subject.touch_in(station)
             expect(subject.in_journey?).to eq true
@@ -51,8 +41,6 @@ describe Oystercard do
     end
 
     it "requires a minimum balances before touching in" do
-      card.topup(Oystercard::MINIMUM_BALANCE)
-      card.touch_out(station)
       expect{subject.touch_in(station)}.to raise_error "Please top up to £ #{Oystercard::MINIMUM_BALANCE} before touching in"
     end
 
