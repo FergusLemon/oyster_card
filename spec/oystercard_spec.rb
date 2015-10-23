@@ -5,7 +5,7 @@ describe Oystercard do
   let(:station) { double(name: :euston, zone: 2) }
   let(:start_journey) { double(start_journey: :victoria) } #allows journey object to receive the start_journey message and return victoria
   let(:end_journey) { double(end_journey: :angel) }
-  let(:journey) { double(journey) }
+  let(:journey) { double :journey }
 
   context 'card balance' do
     it 'show the card balance' do
@@ -30,12 +30,12 @@ describe Oystercard do
     end
 
     before do
-      allow(:journey).to receive(:fare)
+      allow(journey).to receive(:fare).and_return(1)
     end
-    
+
     it "deducts travel fare from card balance when touching out" do
       card.topup(50)
-      expect { card.touch_out(station) }.to change { card.balance }.by(-Oystercard::MINIMUM_BALANCE)
+      expect { card.touch_out(station) }.to change { card.balance }.by(-6)
     end
 
   end
