@@ -5,9 +5,9 @@ DEFAULT_BALANCE = 0
 MINIMUM_BALANCE = 1
 attr_reader :balance
 
-  def initialize(balance = DEFAULT_BALANCE, journey_klass)
+  def initialize(balance = DEFAULT_BALANCE, journey_klass = Journey)
     @balance = balance
-    @journey = journey_klass.new
+    @journey_klass = journey_klass
   end
 
   def topup(value)
@@ -17,17 +17,20 @@ attr_reader :balance
 
   def touch_in(station)
     fail "Please top up to £ #{MINIMUM_BALANCE} before touching in" if empty?
-    @journey.start_journey(station)
+    @journey_klass.start_journey(station)
   end
 
   def touch_out(station)
     deduct
-    @journey.end_journey(station)
+    @journey_klass.end_journey(station)
+    # @journey_klass.add_history
   end
 
   def in_journey?
-    journey.journey_complete? == false
+    @journey_klass.journey_complete? == false
   end
+
+
 
   private
 
@@ -40,7 +43,8 @@ attr_reader :balance
     end
 
     def deduct
-      @balance -= MINIMUM_BALANCE
+      @balance -= @journey_klass.fare
+      # @balance -= MINIMUM_BALANCE
     end
 
 

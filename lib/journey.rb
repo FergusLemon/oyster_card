@@ -5,16 +5,15 @@ class Journey
 MIN_FARE = 1
 PENALTY_FARE = 6
 
-attr_reader :trip
+attr_reader :entry_station
 
 def initialize
-   @entry_station = nil
-   @exit_station = nil
    @journey_history = []
  end
 
 
  def start_journey(entry_station)
+
    @entry_station = entry_station.name
  end
 
@@ -35,16 +34,20 @@ def initialize
    fare_calculator
  end
 
- private
-
  def add_history
    @journey_history << {@entry_station => @exit_station}
    @entry_station = nil
    @exit_station = nil
  end
 
+ private
+
  def fare_calculator
-   journey_complete? ? MIN_FARE : PENALTY_FARE
+   if @journey_history.last.include? (nil)
+     PENALTY_FARE
+   else
+     MIN_FARE
+   end
  end
 
 end
